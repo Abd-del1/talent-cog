@@ -23,4 +23,4 @@ jobs:
       - name: Write commit details to file
         run: |
           echo "------------------------" >> log.txt
-          ech
+          echo
