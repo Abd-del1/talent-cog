@@ -1,0 +1,29 @@
+name: Commit Logger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  log-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Write commit details to file
+        run: |
+          echo "------------------------" >> log.txt
+          echo "Time: $(date)" >> log.txt
+          echo "Author: ${{ github.actor }}" >> log.txt
+          echo "Message: ${{ github.event.head_commit.message }}" >> log.txt
+
+      - name: Commit file back to repo
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add log.txt
+          git commit -m "Auto update log file"
+          git push
